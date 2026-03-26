@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLUX ENERGY — Каталог продукции</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --accent: #1994FE; --accent-light: #E8F4FF; --accent-mid: #B3DAFF;
+  --accent-dark: #0a6fd4; --dark: #0D1117; --dark-panel: #131921;
+  --text-dark: #1A1D23; --text-muted: #6B7280; --text-light-muted: #8B95A5;
+  --white: #FFFFFF; --bg-light: #F7F8FA; --border-light: #E2E5EA;
+  --page-w: 210mm; --page-h: 297mm;
+}
+html { font-size: 11.5px; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: #E5E7EB; color: var(--text-dark); -webkit-font-smoothing: antialiased; }
+.page { width: var(--page-w); height: var(--page-h); margin: 20px auto; position: relative; overflow: hidden; background: var(--white); box-shadow: 0 4px 24px rgba(0,0,0,.12); page-break-after: always; }
+@media print { body { background: none; } .page { margin: 0; box-shadow: none; } }
+
+/* HEADER */
+.page-header { position: absolute; top: 0; left: 0; right: 0; height: 13mm; display: flex; align-items: center; justify-content: space-between; padding: 0 16mm; background: var(--dark); z-index: 10; }
+.page-header__logo { display: flex; align-items: center; gap: 6px; }
+.page-header__logo-icon { width: 20px; height: 20px; background: var(--accent); border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+.page-header__logo-icon svg { width: 12px; height: 12px; }
+.page-header__logo-text { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.85rem; letter-spacing: .1em; color: var(--white); }
+.page-header__title { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--text-light-muted); }
+
+/* FOOTER */
+.page-footer { position: absolute; bottom: 0; left: 0; right: 0; height: 12mm; display: flex; align-items: center; justify-content: space-between; padding: 0 16mm; border-top: 1px solid var(--border-light); background: var(--white); z-index: 10; }
+.page-footer__brand { font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: .18em; color: var(--text-muted); text-transform: uppercase; }
+.page-footer__brand span { color: var(--accent); }
+.page-footer__domain { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--text-muted); }
+.page-footer__pager { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--accent); font-weight: 700; }
+
+.content-page { padding: 18mm 16mm 18mm; }
+.deco-stripe { position: absolute; top: 13mm; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-mid) 60%, transparent); }
+.product-accent-bar { position: absolute; top: 13mm; left: 0; width: 5px; height: 60mm; background: linear-gradient(to bottom, var(--accent), transparent); border-radius: 0 3px 3px 0; }
+
+/* LOGO */
+.logo { display: inline-flex; align-items: center; gap: 8px; }
+.logo__icon { width: 34px; height: 34px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.logo__icon svg { width: 20px; height: 20px; }
+.logo__text { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 1.7rem; letter-spacing: .1em; }
+.logo--light .logo__text { color: var(--white); }
+
+/* COVER */
+.cover { background: var(--dark); display: flex; }
+.cover__left { width: 52%; height: var(--page-h); display: flex; flex-direction: column; justify-content: space-between; padding: 16mm 14mm 14mm 16mm; position: relative; }
+.cover__left::after { content: ''; position: absolute; top: 0; right: 0; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(255,255,255,.06) 20%, rgba(255,255,255,.06) 80%, transparent); }
+.cover__right { width: 48%; height: var(--page-h); position: relative; overflow: hidden; }
+.cover__photo-zone { width: 100%; height: 100%; background: var(--dark-panel); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--text-light-muted); border-left: 2px dashed rgba(255,255,255,.08); }
+.cover__photo-zone svg { width: 48px; height: 48px; opacity: .35; }
+.cover__photo-zone span { font-size: 0.95rem; opacity: .5; font-style: italic; }
+.cover__geo-pattern { position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; opacity: .03; background: repeating-linear-gradient(45deg, transparent, transparent 8px, var(--accent) 8px, var(--accent) 9px); }
+.cover__tag { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--accent); letter-spacing: .25em; text-transform: uppercase; margin-bottom: 6mm; display: flex; align-items: center; gap: 8px; }
+.cover__tag::before { content: ''; width: 24px; height: 2px; background: var(--accent); }
+.cover__title { font-size: 3.2rem; font-weight: 800; line-height: 1.12; color: var(--white); margin-bottom: 5mm; }
+.cover__title em { font-style: normal; color: var(--accent); }
+.cover__sub { font-size: 1.25rem; color: var(--text-light-muted); line-height: 1.65; max-width: 90%; }
+.cover__meta { display: flex; flex-direction: column; gap: 5mm; }
+.cover__products { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: rgba(255,255,255,.3); letter-spacing: .05em; line-height: 1.7; }
+.cover__voltage { font-family: 'Space Mono', monospace; font-size: 0.88rem; color: var(--text-light-muted); letter-spacing: .08em; border-top: 1px solid rgba(255,255,255,.08); padding-top: 4mm; }
+.cover__location { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--accent); letter-spacing: .12em; display: flex; align-items: center; gap: 6px; }
+
+/* SECTIONS */
+.section-tag { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--accent); letter-spacing: .2em; text-transform: uppercase; margin-bottom: 3mm; display: flex; align-items: center; gap: 8px; }
+.section-tag::before { content: ''; width: 20px; height: 2px; background: var(--accent); }
+.section-title { font-size: 2.6rem; font-weight: 800; color: var(--text-dark); line-height: 1.15; margin-bottom: 6mm; }
+.lead-text { font-size: 1.18rem; font-weight: 500; color: var(--accent-dark); line-height: 1.55; margin-bottom: 5mm; padding-bottom: 5mm; border-bottom: 1px solid var(--border-light); }
+.variant-label { font-family: 'Space Mono', monospace; font-size: 0.76rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2.5mm; margin-top: 5mm; display: flex; align-items: center; gap: 6px; }
+.variant-label::before { content: ''; width: 12px; height: 12px; border: 2px solid var(--accent-mid); border-radius: 3px; flex-shrink: 0; }
+.body-text { font-size: 1.08rem; line-height: 1.7; color: var(--text-dark); margin-bottom: 3.5mm; }
+.body-text--small { font-size: 1rem; }
+.dash-list { list-style: none; margin: 2mm 0 4mm; }
+.dash-list li { font-size: 1.05rem; line-height: 1.65; color: var(--text-dark); padding-left: 6mm; position: relative; margin-bottom: 1.2mm; }
+.dash-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 8px; height: 2px; background: var(--accent); }
+
+.mission-block { margin-top: 5mm; padding: 5mm 6mm; background: linear-gradient(135deg, rgba(25,148,254,.07), rgba(25,148,254,.02)); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; position: relative; }
+.mission-block__icon { position: absolute; top: 4mm; right: 5mm; width: 32px; height: 32px; opacity: .08; color: var(--accent); }
+.mission-block__label { font-family: 'Space Mono', monospace; font-size: 0.74rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 2mm; }
+.mission-block__text { font-size: 1.12rem; font-weight: 500; line-height: 1.6; color: var(--text-dark); }
+.vision-block { margin-top: 4mm; }
+.vision-block__label { font-family: 'Space Mono', monospace; font-size: 0.74rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2mm; }
+.vision-block__text { font-size: 1.05rem; line-height: 1.6; color: var(--text-muted); font-style: italic; }
+
+/* PHOTOS */
+.photo-page { display: flex; align-items: center; justify-content: center; }
+.photo-placeholder { width: calc(100% - 24mm); height: calc(100% - 36mm); background: var(--bg-light); border: 2px dashed var(--border-light); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--text-muted); }
+.photo-placeholder svg { width: 56px; height: 56px; opacity: .25; }
+.photo-placeholder__main { font-size: 1.25rem; font-weight: 600; }
+.photo-placeholder__sub { font-size: 1rem; opacity: .55; font-style: italic; max-width: 60%; text-align: center; line-height: 1.5; }
+
+/* ADVANTAGES */
+.advantages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm; margin-top: 5mm; }
+.adv-card { padding: 5mm 5.5mm; border-radius: 10px; background: var(--white); border: 1px solid var(--border-light); position: relative; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.04); }
+.adv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-mid)); }
+.adv-card__head { display: flex; align-items: center; gap: 3.5mm; margin-bottom: 3mm; }
+.adv-card__icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.adv-card__icon svg { width: 20px; height: 20px; color: var(--accent); }
+.adv-card__num { font-family: 'Space Mono', monospace; font-size: 0.68rem; font-weight: 700; color: var(--accent); letter-spacing: .1em; }
+.adv-card__title { font-size: 1.18rem; font-weight: 700; color: var(--text-dark); line-height: 1.25; }
+.adv-card__text { font-size: 1rem; line-height: 1.65; color: var(--text-muted); }
+
+/* PRODUCT TABLE */
+.product-intro { font-size: 1.12rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 5mm; }
+.product-table { width: 100%; border-collapse: collapse; margin-top: 2mm; }
+.product-table th { font-family: 'Space Mono', monospace; font-size: 0.74rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 3mm 3mm; border-bottom: 2px solid var(--text-dark); }
+.product-table td { font-size: 1rem; padding: 2.8mm 3mm; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
+.product-table tr:last-child td { border-bottom: none; }
+.product-table td:first-child { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.92rem; color: var(--accent-dark); white-space: nowrap; width: 30%; }
+.product-table td:nth-child(2) { width: 6%; text-align: center; }
+.product-table td:nth-child(2) svg { width: 18px; height: 18px; color: var(--accent); opacity: .5; }
+.product-table td:last-child { color: var(--text-dark); line-height: 1.5; }
+.product-table tbody tr:nth-child(even) { background: var(--bg-light); }
+
+/* PRODUCT SPEC */
+.product-header { margin-bottom: 5mm; }
+.product-header__tag { font-family: 'Space Mono', monospace; font-size: 0.78rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 2mm; display: flex; align-items: center; gap: 8px; }
+.product-header__tag::before { content: ''; width: 18px; height: 2px; background: var(--accent); }
+.product-header__title-row { display: flex; align-items: center; gap: 4mm; margin-bottom: 2mm; }
+.product-header__title-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.product-header__title-icon svg { width: 26px; height: 26px; color: var(--accent); }
+.product-header__title { font-size: 2.4rem; font-weight: 800; color: var(--text-dark); line-height: 1.15; }
+.product-header__subtitle { font-size: 1.25rem; font-weight: 600; color: var(--text-muted); line-height: 1.35; }
+.product-desc { font-size: 1.06rem; line-height: 1.7; color: var(--text-dark); margin-bottom: 3.5mm; }
+.spec-table-label { font-family: 'Space Mono', monospace; font-size: 0.76rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--accent-dark); margin: 4mm 0 2.5mm; display: flex; align-items: center; gap: 6px; }
+.spec-table-label svg { width: 16px; height: 16px; color: var(--accent); }
+.spec-table { width: 100%; border-collapse: collapse; }
+.spec-table tr:nth-child(even) { background: var(--bg-light); }
+.spec-table td { font-size: 0.95rem; padding: 2.5mm 3.5mm; vertical-align: top; line-height: 1.5; border-bottom: 1px solid var(--border-light); }
+.spec-table tr:last-child td { border-bottom: none; }
+.spec-table td:first-child { width: 48%; color: var(--text-muted); }
+.spec-table td:last-child { font-weight: 600; color: var(--text-dark); }
+
+.exec-list, .supply-list { list-style: none; margin: 2.5mm 0 3.5mm; }
+.exec-list li, .supply-list li { font-size: 1.02rem; line-height: 1.65; color: var(--text-dark); padding-left: 6mm; position: relative; margin-bottom: 1.2mm; }
+.exec-list li::before, .supply-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 8px; height: 2px; background: var(--accent); }
+
+/* PHOTO GRIDS */
+.grid-photo-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18mm 16mm 18mm; height: calc(var(--page-h) - 25mm); }
+.triple-photo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4mm; width: 100%; flex: 1; }
+.dual-photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; width: 100%; flex: 1; }
+.photo-cell { background: var(--bg-light); border: 2px dashed var(--border-light); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--text-muted); padding: 4mm; }
+.photo-cell svg { width: 40px; height: 40px; opacity: .25; }
+.photo-cell__label { font-size: 1rem; font-weight: 600; text-align: center; }
+.photo-cell__sub { font-size: 0.85rem; opacity: .55; font-style: italic; text-align: center; line-height: 1.4; }
+.wide-photo-cell { width: 100%; flex: 1; background: var(--bg-light); border: 2px dashed var(--border-light); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--text-muted); padding: 4mm; }
+.wide-photo-cell svg { width: 56px; height: 56px; opacity: .25; }
+.wide-photo-cell__main { font-size: 1.15rem; font-weight: 600; }
+.wide-photo-cell__sub { font-size: 0.92rem; opacity: .55; font-style: italic; text-align: center; line-height: 1.45; max-width: 70%; }
+
+/* DUAL PRODUCT (two products on one page) */
+.sub-product { margin-top: 5mm; padding-top: 4mm; border-top: 1px solid var(--border-light); }
+.sub-product__title { font-size: 1.35rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2mm; display: flex; align-items: center; gap: 3mm; }
+.sub-product__title svg { width: 20px; height: 20px; color: var(--accent); }
+
+/* PROCESS TIMELINE (page 30) */
+.process-grid { display: flex; flex-direction: column; gap: 3.5mm; margin-top: 5mm; }
+.process-step { display: flex; align-items: flex-start; gap: 4mm; position: relative; }
+.process-step__num { width: 42px; height: 42px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(25,148,254,.25); }
+.process-step__num span { font-family: 'Space Mono', monospace; font-size: 1rem; font-weight: 700; color: var(--white); }
+.process-step__connector { position: absolute; top: 42px; left: 20px; width: 2px; height: calc(100% + 3.5mm - 42px); background: var(--accent-mid); }
+.process-step:last-child .process-step__connector { display: none; }
+.process-step__body { flex: 1; padding-top: 2px; }
+.process-step__title { font-size: 1.18rem; font-weight: 700; color: var(--text-dark); margin-bottom: 1.5mm; }
+.process-step__text { font-size: 0.98rem; line-height: 1.6; color: var(--text-muted); }
+.process-lead { font-size: 1.08rem; line-height: 1.65; color: var(--text-muted); margin-bottom: 5mm; }
+
+/* CONTACT PAGE */
+.contact-page { background: var(--dark); }
+.contact-wrap { padding: 20mm 16mm 18mm; height: 100%; display: flex; flex-direction: column; }
+.contact-logo { margin-bottom: 6mm; }
+.contact-logo .logo__icon { width: 42px; height: 42px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; }
+.contact-logo .logo__icon svg { width: 24px; height: 24px; }
+.contact-logo .logo__text { font-size: 2rem; color: var(--white); }
+.contact-tagline { font-size: 1.12rem; color: var(--text-light-muted); line-height: 1.6; margin-bottom: 3mm; max-width: 80%; }
+.contact-tagline--sub { font-size: 1rem; color: rgba(255,255,255,.35); line-height: 1.6; margin-bottom: 8mm; }
+.contact-divider { width: 100%; height: 1px; background: rgba(255,255,255,.08); margin: 6mm 0; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-bottom: auto; }
+.contact-block {}
+.contact-block__label { font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 3mm; display: flex; align-items: center; gap: 6px; }
+.contact-block__label svg { width: 16px; height: 16px; color: var(--accent); }
+.contact-block__text { font-size: 1.05rem; line-height: 1.7; color: rgba(255,255,255,.75); }
+.contact-block__text a { color: var(--accent); text-decoration: none; }
+.contact-block__text strong { color: var(--white); font-weight: 600; }
+.contact-requests { margin-top: 6mm; }
+.contact-requests__label { font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 3mm; display: flex; align-items: center; gap: 6px; }
+.contact-requests__label svg { width: 16px; height: 16px; color: var(--accent); }
+.contact-requests ul { list-style: none; }
+.contact-requests li { font-size: 1rem; line-height: 1.65; color: rgba(255,255,255,.65); padding-left: 6mm; position: relative; margin-bottom: 1.5mm; }
+.contact-requests li::before { content: ''; position: absolute; left: 0; top: 8px; width: 8px; height: 2px; background: var(--accent); }
+.contact-footer { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 5mm; border-top: 1px solid rgba(255,255,255,.06); }
+.contact-footer__domain { font-family: 'Space Mono', monospace; font-size: 0.95rem; font-weight: 700; color: var(--accent); letter-spacing: .08em; }
+.contact-footer__copy { font-size: 0.78rem; color: rgba(255,255,255,.25); }
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ico-bolt" viewBox="0 0 24 24"><path d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z" fill="currentColor"/></symbol>
+  <symbol id="ico-factory" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20V8l5 4V8l5 4V4h4a2 2 0 0 1 2 2v14"/><path d="M2 20h20"/><rect x="12" y="12" width="3" height="4" rx=".5"/><rect x="17" y="12" width="3" height="4" rx=".5"/></symbol>
+  <symbol id="ico-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="ico-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="ico-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+  <symbol id="ico-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="ico-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></symbol>
+  <symbol id="ico-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ico-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27,6.96 12,12.01 20.73,6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+  <symbol id="ico-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="ico-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+  <symbol id="ico-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/></symbol>
+  <symbol id="ico-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+  <symbol id="ico-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
+  <symbol id="ico-columns" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></symbol>
+</svg>
+
+
+<!-- PAGE 1 — ОБЛОЖКА -->
+<div class="page cover">
+  <div class="cover__left">
+    <div>
+      <div class="logo logo--light" style="margin-bottom:8mm;">
+        <div class="logo__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z" fill="#fff"/></svg></div>
+        <span class="logo__text">FLUX</span>
+      </div>
+      <div class="cover__tag">Каталог продукции</div>
+      <h1 class="cover__title">Производство<br>электрощитового<br>оборудования<br><em>0,4–10 кВ</em></h1>
+      <p class="cover__sub">для промышленных, нефтегазовых и инфраструктурных объектов</p>
+    </div>
+    <div class="cover__meta">
+      <div class="cover__products">КТПН • БКТП • КСО • КРУН • НКУ • ВРУ • ГРЩ • Шкафы управления</div>
+      <div class="cover__voltage">flux-energy.kz</div>
+      <div class="cover__location"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Казахстан | Атырау</div>
+    </div>
+    <div class="cover__geo-pattern"></div>
+  </div>
+  <div class="cover__right">
+    <div class="cover__photo-zone"><svg><use href="#ico-image"/></svg><span>Фото производственного цеха<br>или готового изделия</span></div>
+  </div>
+</div>
+
+<!-- PAGE 2 — О КОМПАНИИ -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="section-tag">О компании</div>
+    <div class="section-title">FLUX Energy —<br>казахстанский<br>производитель</div>
+    <div class="lead-text">FLUX Energy — казахстанский производитель электрощитового оборудования</div>
+    <div class="variant-label">1 вариант</div>
+    <p class="body-text">FLUX Energy — производственная компания, специализирующаяся на изготовлении электрощитового оборудования класса 0,4–10 кВ для промышленных, нефтегазовых, инфраструктурных и гражданских объектов на территории Республики Казахстан.</p>
+    <p class="body-text">Компания базируется в Атырау и обеспечивает полный производственный цикл: от технической проработки до отгрузки готового изделия и передачи комплекта документации заказчику. В отличие от дистрибьюторских схем, FLUX Energy производит оборудование на собственной базе и несёт прямую ответственность за результат.</p>
+    <p class="body-text">Ключевое преимущество — локальное производство в Казахстане: оперативная коммуникация, возможность согласования технических решений на всех этапах, соответствие национальной нормативной базе и техническая поддержка без задержек, характерных для зарубежных поставок.</p>
+    <div class="variant-label">2 вариант</div>
+    <p class="body-text">FLUX Energy — казахстанский производитель электрощитового оборудования 0,4–10 кВ для объектов нефтегазового сектора, промышленности, гражданского строительства и государственной инфраструктуры.</p>
+    <p class="body-text">Компания работает в Атырау и ориентирована на выпуск решений под требования проекта, обеспечивая локальное производство, документальное сопровождение и техническую поддержку на территории Республики Казахстан.</p>
+    <p class="body-text body-text--small">Производственный цикл FLUX Energy включает:</p>
+    <ul class="dash-list">
+      <li>Техническую проработку и подбор исполнения под параметры объекта</li>
+      <li>Согласование спецификации и комплектации с заказчиком</li>
+      <li>Изготовление оборудования на собственной производственной базе</li>
+      <li>Контроль качества сборки и соответствия технической документации</li>
+      <li>Формирование комплекта технической и сопроводительной документации</li>
+      <li>Отгрузку и сопровождение поставки</li>
+    </ul>
+    <div class="mission-block">
+      <svg class="mission-block__icon" viewBox="0 0 24 24"><use href="#ico-zap"/></svg>
+      <div class="mission-block__label">Миссия</div>
+      <div class="mission-block__text">Обеспечивать энергетическую устойчивость Казахстана, создавая безупречное электротехническое оборудование, которое питает промышленность и города сегодня, защищая их завтра.</div>
+    </div>
+    <div class="vision-block">
+      <div class="vision-block__label">Видение</div>
+      <div class="vision-block__text">Стать национальным эталоном инженерной дисциплины и технологического суверенитета в производстве систем распределения энергии.</div>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">2</div></div>
+</div>
+
+<!-- PAGE 3 — ФОТО -->
+<div class="page photo-page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="photo-placeholder" style="margin-top:13mm;"><svg><use href="#ico-image"/></svg><div class="photo-placeholder__main">ФОТО</div><div class="photo-placeholder__sub">Производственный цех — общий вид или рабочий процесс сборки</div></div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">3</div></div>
+</div>
+
+<!-- PAGE 4 — ПРЕИМУЩЕСТВА -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="section-tag">Конкурентные преимущества</div>
+    <div class="section-title">Почему выбирают<br>FLUX Energy</div>
+    <div class="advantages-grid">
+      <div class="adv-card"><div class="adv-card__head"><div class="adv-card__icon"><svg><use href="#ico-factory"/></svg></div><div><div class="adv-card__num">01</div><div class="adv-card__title">Локальное производство</div></div></div><div class="adv-card__text">Производственная база в Казахстане — оперативная коммуникация, сокращённые сроки, соответствие национальным нормативным требованиям.</div></div>
+      <div class="adv-card"><div class="adv-card__head"><div class="adv-card__icon"><svg><use href="#ico-settings"/></svg></div><div><div class="adv-card__num">02</div><div class="adv-card__title">Изготовление под проект</div></div></div><div class="adv-card__text">Оборудование разрабатывается и изготавливается под конкретные параметры объекта, а не только в рамках типового ассортимента.</div></div>
+      <div class="adv-card"><div class="adv-card__head"><div class="adv-card__icon"><svg><use href="#ico-clipboard"/></svg></div><div><div class="adv-card__num">03</div><div class="adv-card__title">Управляемый процесс</div></div></div><div class="adv-card__text">Чёткая последовательность этапов: проработка, согласование, изготовление, контроль, документация, отгрузка.</div></div>
+      <div class="adv-card"><div class="adv-card__head"><div class="adv-card__icon"><svg><use href="#ico-file"/></svg></div><div><div class="adv-card__num">04</div><div class="adv-card__title">Документальное сопровождение</div></div></div><div class="adv-card__text">Комплект технической и сопроводительной документации формируется по согласованному с заказчиком перечню.</div></div>
+      <div class="adv-card"><div class="adv-card__head"><div class="adv-card__icon"><svg><use href="#ico-pin"/></svg></div><div><div class="adv-card__num">05</div><div class="adv-card__title">Локальная поддержка</div></div></div><div class="adv-card__text">Все рабочие вопросы решаются внутри Казахстана без посредников и международных задержек.</div></div>
+      <div class="adv-card"><div class="adv-card__head"><div class="adv-card__icon"><svg><use href="#ico-cpu"/></svg></div><div><div class="adv-card__num">06</div><div class="adv-card__title">Техническая компетентность</div></div></div><div class="adv-card__text">Инженерная проработка каждого заказа: подбор компонентов, верификация схемных решений, оценка условий эксплуатации.</div></div>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">4</div></div>
+</div>
+
+<!-- PAGE 5 — ФОТО -->
+<div class="page photo-page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="photo-placeholder" style="margin-top:13mm;"><svg><use href="#ico-image"/></svg><div class="photo-placeholder__main">ФОТО</div><div class="photo-placeholder__sub">Производственный процесс / инженер за рабочим местом / деталь изделия</div></div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">5</div></div>
+</div>
+
+<!-- PAGE 6 — ПРОДУКТОВАЯ ЛИНЕЙКА -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="section-tag">Продуктовая линейка</div>
+    <div class="section-title">Виды выпускаемого<br>оборудования</div>
+    <p class="product-intro">FLUX Energy производит электрощитовое оборудование напряжением 0,4–10 кВ для решения задач электроснабжения, распределения электроэнергии и автоматизации управления на промышленных и инфраструктурных объектах.</p>
+    <table class="product-table"><thead><tr><th>Обозначение</th><th></th><th>Описание</th></tr></thead><tbody>
+      <tr><td>КТПН / КТПГ</td><td><svg><use href="#ico-box"/></svg></td><td>Комплектные трансформаторные подстанции наружной и городской установки</td></tr>
+      <tr><td>БКТП</td><td><svg><use href="#ico-home"/></svg></td><td>Комплектные трансформаторные подстанции в блочно-модульном здании</td></tr>
+      <tr><td>КТП 25-250</td><td><svg><use href="#ico-zap"/></svg></td><td>Однотрансформаторные подстанции столбового типа мощностью 25–250 кВА</td></tr>
+      <tr><td>КСО-292 / КСО-366</td><td><svg><use href="#ico-columns"/></svg></td><td>Камеры сборные одностороннего обслуживания 6–10 кВ</td></tr>
+      <tr><td>КРУН К-6</td><td><svg><use href="#ico-grid"/></svg></td><td>Комплектные распределительные устройства наружной установки</td></tr>
+      <tr><td>К-14МК</td><td><svg><use href="#ico-grid"/></svg></td><td>Комплектно-распределительные устройства внутренней установки 6–10 кВ</td></tr>
+      <tr><td>КРН / ЯКНО</td><td><svg><use href="#ico-layers"/></svg></td><td>Ячейки высоковольтные наружной установки</td></tr>
+      <tr><td>ВРУ / ГРЩ</td><td><svg><use href="#ico-box"/></svg></td><td>Вводно-распределительные устройства и главные распределительные щиты</td></tr>
+      <tr><td>ЩО-70</td><td><svg><use href="#ico-layers"/></svg></td><td>Панели распределительные одностороннего обслуживания 0,4 кВ</td></tr>
+      <tr><td>ПР11 / ШР11</td><td><svg><use href="#ico-box"/></svg></td><td>Пункты распределительные напольного и навесного исполнения</td></tr>
+      <tr><td>ЯРП / ЯР</td><td><svg><use href="#ico-zap"/></svg></td><td>Ящики силовые с рубильником</td></tr>
+      <tr><td>Я5000 / ЯУО</td><td><svg><use href="#ico-settings"/></svg></td><td>Ящики управления электродвигателями и осветительными установками</td></tr>
+    </tbody></table>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">6</div></div>
+</div>
+
+<!-- PAGE 7 — ТРОЙНОЕ ФОТО -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="triple-photo-grid">
+      <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">КСО / КРУН</div></div>
+      <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">КТПН / БКТП</div></div>
+      <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">ВРУ / НКУ</div></div>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">7</div></div>
+</div>
+
+<!-- PAGE 8 — КТПН / КТПГ -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — КТПН / КТПГ</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-box"/></svg></div><div class="product-header__title">КТПН / КТПГ</div></div>
+      <div class="product-header__subtitle">Комплектные трансформаторные подстанции наружной и городской установки</div>
+    </div>
+    <p class="product-desc">Комплектные трансформаторные подстанции КТПН и КТПГ предназначены для приёма, преобразования и распределения электрической энергии переменного трёхфазного тока частотой 50 Гц при номинальном напряжении 6(10)/0,4 кВ. Применяются для электроснабжения объектов промышленных предприятий и населённых пунктов.</p>
+    <p class="product-desc">Конструктивно выполнены в виде металлического каркаса из секций, соединённых разъёмным (болтовым) соединением. В секции расположены три ячейки: силового трансформатора, распределительного устройства РУ-6(10) кВ и распределительного устройства РУ-0,4 кВ.</p>
+    <div class="spec-table-label"><svg><use href="#ico-layers"/></svg> Исполнения по вводу ВН и выводам НН</div>
+    <ul class="exec-list">
+      <li>С воздушным вводом ВН и кабельными выводами НН</li>
+      <li>С воздушным вводом ВН и воздушными выводами НН</li>
+      <li>С кабельным вводом ВН и кабельными выводами НН</li>
+      <li>С кабельным вводом ВН и воздушными выводами НН</li>
+    </ul>
+    <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики</div>
+    <table class="spec-table">
+      <tr><td>Мощность силового трансформатора, кВА</td><td>100; 160; 250; 400; 630; 1000</td></tr>
+      <tr><td>Количество трансформаторов, шт.</td><td>1</td></tr>
+      <tr><td>Номинальное напряжение на стороне ВН, кВ</td><td>6 (10)</td></tr>
+      <tr><td>Номинальное напряжение на стороне НН, кВ</td><td>0,4</td></tr>
+      <tr><td>Ном. ток плавких вставок предохранителей, А</td><td>20(16); 31,5(20); 50(31,5); 80(50); 100(80); 160(100)</td></tr>
+      <tr><td>Ном. ток трансформатора на стороне НН, А</td><td>152; 243; 380; 608; 958; 1521</td></tr>
+      <tr><td>Число отходящих линий, шт.</td><td>Согласно опросному листу</td></tr>
+      <tr><td>Температура окружающего воздуха</td><td>от −40°С до +40°С</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>Не более 1000 м</td></tr>
+      <tr><td>Относительная влажность воздуха</td><td>До 80% при +20°С</td></tr>
+    </table>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">8</div></div>
+</div>
+
+<!-- PAGE 9 — ФОТО КТПН / КТПГ -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="dual-photo-grid">
+      <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">КТПН — общий вид<br>наружной установки</div></div>
+      <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">КТПГ — городская<br>подстанция</div></div>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">9</div></div>
+</div>
+
+<!-- PAGE 10 — БКТП -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — БКТП</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-home"/></svg></div><div class="product-header__title">БКТП</div></div>
+      <div class="product-header__subtitle">Комплектные трансформаторные подстанции в блочно-модульном здании</div>
+    </div>
+    <p class="product-desc">Комплектные трансформаторные подстанции серии БКТП предназначены для организации распределительных пунктов 0,4–10 кВ, приёма и распределения электрической энергии переменного трёхфазного тока промышленной частоты 50 Гц и трансформаторных подстанций напряжением 6(10)/0,4 кВ мощностью до 2500 кВА.</p>
+    <p class="product-desc">БКТП представляет собой один или несколько блок-модулей, установленных на фундамент с полностью смонтированными электрическими соединениями. Стены модульного блока выполнены из трёхслойных сэндвич-панелей с минераловатным (негорючим) утеплителем на базальтовой основе.</p>
+    <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики</div>
+    <table class="spec-table">
+      <tr><td>Мощность подстанции, кВА</td><td>До 2500</td></tr>
+      <tr><td>Номинальное напряжение, кВ</td><td>6(10) / 0,4</td></tr>
+      <tr><td>Частота, Гц</td><td>50</td></tr>
+      <tr><td>Температура окружающего воздуха</td><td>от −60°С до +40°С</td></tr>
+      <tr><td>Среднегодовая относительная влажность</td><td>75% при +15°С</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>Не более 1000 м</td></tr>
+      <tr><td>Сейсмостойкость</td><td>До 8 баллов по шкале MSK-64 (до 25 м)</td></tr>
+      <tr><td>Стены блок-модуля</td><td>Трёхслойные сэндвич-панели с минераловатным утеплителем</td></tr>
+      <tr><td>Пол блок-модуля</td><td>Стальные рифлёные листы на сварной раме</td></tr>
+    </table>
+    <div class="spec-table-label"><svg><use href="#ico-box"/></svg> Состав поставки</div>
+    <ul class="supply-list">
+      <li>КТП согласно опросному листу</li>
+      <li>Блочно-модульное здание согласно компоновке опросного листа</li>
+      <li>Лестница и площадка для вывода трансформатора в ремонт (при необходимости)</li>
+      <li>Дополнительное оборудование для модульного здания согласно опросному листу</li>
+    </ul>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">10</div></div>
+</div>
+
+<!-- PAGE 11 — ФОТО БКТП -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="wide-photo-cell"><svg><use href="#ico-image"/></svg><div class="wide-photo-cell__main">ФОТО</div><div class="wide-photo-cell__sub">БКТП — внешний вид блочно-модульного здания и внутренняя установка</div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">11</div></div>
+</div>
+
+<!-- PAGE 12 — КТП 25-250 -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — КТП 25-250</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-zap"/></svg></div><div class="product-header__title">КТП 25-250</div></div>
+      <div class="product-header__subtitle">Комплектные трансформаторные подстанции столбового типа КТП 25-250</div>
+    </div>
+    <p class="product-desc">Комплектные трансформаторные подстанции серии КТП 25-250 мощностью от 25 до 250 кВА представляют собой однотрансформаторные подстанции тупикового типа наружной установки. Предназначены для приёма электрической энергии напряжением 6 или 10 кВ, преобразования в напряжение 0,4 кВ и снабжения ею потребителей.</p>
+    <p class="product-desc">КТП мощностью от 25 до 250 кВА оформляется в виде конструкции, содержащей высоковольтный шкаф ввода, низковольтный шкаф и платформу для установки трансформатора. Трансформатор типа ТМ или ТМГ устанавливается открыто и защищён от атмосферных осадков козырьком. Монтируется на пьедестале с точкой ввода высокого напряжения на высоте 4,5 м от уровня земли.</p>
+    <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики</div>
+    <table class="spec-table">
+      <tr><td>Мощность силового трансформатора, кВА</td><td>25; 40; 63; 100; 160; 250</td></tr>
+      <tr><td>Номинальное напряжение, кВ</td><td>6 (10)</td></tr>
+      <tr><td>Ном. ток на стороне ВН, А</td><td>2,4(1,45); 3,9(2,31); 6,1(3,64); 9,6(5,78); 15,4(9,25); 24(14,45)</td></tr>
+      <tr><td>Ток плавкой вставки предохранителя на ВН, А</td><td>8(5); 10(8); 16(10); 20(16); 31,5(20); 40(31,5)</td></tr>
+      <tr><td>Номинальный ток на стороне НН, А</td><td>36; 58; 91; 145; 231; 361</td></tr>
+      <tr><td>Динамическая стойкость к токам КЗ, кА</td><td>1,3–15,6</td></tr>
+      <tr><td>Термическая стойкость к токам КЗ, кА</td><td>0,9–8,1</td></tr>
+      <tr><td>Количество фидеров</td><td>3 (возможно изменение по заказу)</td></tr>
+      <tr><td>Степень защиты</td><td>IP23</td></tr>
+      <tr><td>Напряжение НН, В</td><td>400</td></tr>
+      <tr><td>Климатическое исполнение</td><td>УХЛ, от −40°С до +40°С</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>Не более 1000 м</td></tr>
+      <tr><td>Соответствие ГОСТ</td><td>ГОСТ 14695</td></tr>
+    </table>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">12</div></div>
+</div>
+
+
+<!-- PAGE 13 — ФОТО КТП 25-250 -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="wide-photo-cell"><svg><use href="#ico-image"/></svg><div class="wide-photo-cell__main">ФОТО</div><div class="wide-photo-cell__sub">КТП 25-250 — столбовая подстанция, вид с монтажной площадки</div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">13</div></div>
+</div>
+
+
+<!-- PAGE 14 — ПРОДУКЦИЯ: КСО -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — КСО</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-columns"/></svg></div><div class="product-header__title">КСО</div></div>
+      <div class="product-header__subtitle">Камеры сборные одностороннего обслуживания</div>
+    </div>
+    <p class="product-desc">Камеры сборные одностороннего обслуживания серий КСО-292, КСО-366 и КСО-2-10 предназначены для комплектования высоковольтных распределительных устройств напряжением 6 или 10 кВ трёхфазного переменного тока частотой 50 Гц в системах с изолированной или заземлённой через дугогасящий реактор нейтралью.</p>
+    <p class="product-desc">Камера представляет собой разборную (сварную) металлоконструкцию, внутри которой размещена аппаратура главных цепей, на фасаде — приводы выключателей нагрузки или разъединителей. Доступ в камеру — через переднюю дверь со смотровым окном и замком с ключом. КСО-292 с вакуумными выключателями применяются в ЗРУ с частыми коммутационными операциями.</p>
+    <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики</div>
+    <table class="spec-table">
+      <tr><td>Номинальное напряжение, кВ</td><td>6; 10</td></tr>
+      <tr><td>Номинальное рабочее напряжение, кВ</td><td>7,2; 12</td></tr>
+      <tr><td>Номинальный ток главных цепей, А</td><td>До 1250</td></tr>
+      <tr><td>Номинальный ток сборных шин, А</td><td>630; 1000</td></tr>
+      <tr><td>Ном. ток цепей с выкл. нагрузки / ТН / предохр., А</td><td>630</td></tr>
+      <tr><td>Ном. ток откл. вакуумных выключателей, кА</td><td>20; 25 (31,5*)</td></tr>
+      <tr><td>Ном. ток отключения выключателей нагрузки, кА</td><td>10; 20</td></tr>
+      <tr><td>Ток электродинамической стойкости (амплитуда), кА</td><td>51**</td></tr>
+      <tr><td>Ток термической стойкости (3 с), кА</td><td>25**</td></tr>
+      <tr><td>Напряжение вторичных цепей (перем.), В</td><td>220; 100</td></tr>
+      <tr><td>Напряжение вторичных цепей (пост.), В</td><td>220</td></tr>
+      <tr><td>Вид изоляции</td><td>Воздушная</td></tr>
+      <tr><td>Вид присоединений</td><td>Кабельное; шинное</td></tr>
+      <tr><td>Условия обслуживания</td><td>Одностороннее</td></tr>
+      <tr><td>Степень защиты (закрытые двери, фасад)</td><td>IP20</td></tr>
+      <tr><td>Степень защиты (открытые двери / задняя сторона)</td><td>IP00</td></tr>
+      <tr><td>Климатическое исполнение</td><td>У, категория 3 по ГОСТ 15150-69</td></tr>
+      <tr><td>Температура окружающей среды</td><td>от −25°С до +40°С (КСО-292: от −5°С до +40°С)</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>Не более 1000 м (КСО-2-10: до 2000 м)</td></tr>
+    </table>
+    <p style="font-size:0.78rem; color:var(--text-light-muted); margin-top:2mm; line-height:1.5;">* В соответствии с техническими параметрами выключателей.</p>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">14</div></div>
+</div>
+
+
+<!-- PAGE 15 — КОМПЛЕКТАЦИЯ КСО + ФОТО -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <p style="font-size:0.82rem; color:var(--text-light-muted); margin-bottom:4mm; line-height:1.5;">** Термическая и электродинамическая стойкость трансформаторов тока — в соответствии с их техническими параметрами.</p>
+
+    <div class="spec-table-label"><svg><use href="#ico-box"/></svg> Комплектация (по опросному листу)</div>
+    <ul class="supply-list">
+      <li>Вакуумные выключатели (для КСО-292): ВВ/TEL, Evolis и др.</li>
+      <li>Выключатели нагрузки: ВНА, ВНРп-10, ВНП-10, ВНР-10 с приводами</li>
+      <li>Разъединители: РВ-10, РВЗ-10 с приводом ПР-10</li>
+      <li>Предохранители: ПКТ, ПКН</li>
+      <li>Трансформаторы тока: ТПЛ-10, ТПОЛ-10, ТОЛ</li>
+      <li>Трансформаторы напряжения: НАМИ-6,10; НОЛ 08-6,10; НТМИ</li>
+      <li>Разрядники / ограничители перенапряжений: РВО-6,10, ОПН</li>
+    </ul>
+  </div>
+
+  <div style="position:absolute; bottom:18mm; left:16mm; right:16mm; height:52%; display:grid; grid-template-columns:1fr 1fr; gap:4mm;">
+    <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">КСО-292 — фронтальный вид<br>и внутренняя компоновка</div></div>
+    <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">КСО-366 — вид<br>и деталь панели</div></div>
+  </div>
+
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">15</div></div>
+</div>
+
+
+<!-- PAGE 16 — ПРОДУКЦИЯ: КРУН К-6 -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — КРУН</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-grid"/></svg></div><div class="product-header__title">КРУН К-6</div></div>
+      <div class="product-header__subtitle">Комплектное распределительное устройство наружной установки КРУН К-6</div>
+    </div>
+    <p class="product-desc">КРУН (комплектное распределительное устройство наружной установки) предназначено для приёма и распределения электрической энергии переменного трёхфазного тока промышленной частоты 50 Гц напряжением 6 (10) кВ. Применяется в качестве распределительного устройства 6 (10) кВ на промышленных объектах.</p>
+    <p class="product-desc">КРУН состоит из соединённых между собой шкафов в металлической оболочке, в которых размещены коммутационные аппараты, приборы измерения, учёта, защиты, управления, сигнализации, силовые и оперативные цепи. Шкаф ячейки разделён перегородками на отсеки. Выдвижной элемент занимает три положения: рабочее, контрольно-испытательное и ремонтное.</p>
+    <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики</div>
+    <table class="spec-table">
+      <tr><td>Номинальное напряжение, кВ</td><td>6; 10</td></tr>
+      <tr><td>Номинальное рабочее напряжение, кВ</td><td>7,2; 12</td></tr>
+      <tr><td>Номинальный ток главных цепей, А</td><td>До 1250</td></tr>
+      <tr><td>Номинальный ток сборных шин, А</td><td>630; 1000</td></tr>
+      <tr><td>Ном. ток откл. вакуумных выключателей, кА</td><td>20; 25*</td></tr>
+      <tr><td>Ном. ток отключения выключателей нагрузки, кА</td><td>10; 20</td></tr>
+      <tr><td>Ток электродинамической стойкости (амплитуда), кА</td><td>51**</td></tr>
+      <tr><td>Ток термической стойкости (3 с), кА</td><td>25**</td></tr>
+      <tr><td>Напряжение вторичных цепей (перем.), В</td><td>220; 100</td></tr>
+      <tr><td>Напряжение вторичных цепей (пост.), В</td><td>220</td></tr>
+      <tr><td>Вид изоляции</td><td>Воздушная</td></tr>
+      <tr><td>Вид присоединений</td><td>Кабельное; шинное</td></tr>
+      <tr><td>Условия обслуживания</td><td>Одностороннее</td></tr>
+      <tr><td>Степень защиты</td><td>IP20 (закрытые двери); IP00 (открытые / задняя сторона)</td></tr>
+      <tr><td>Температура окружающей среды</td><td>от −30°С до +40°С</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>До 1000 м</td></tr>
+      <tr><td>Относительная влажность при +35°С</td><td>До 95%</td></tr>
+      <tr><td>Рабочее положение</td><td>Вертикальное, отклонение не более ±5°</td></tr>
+    </table>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">16</div></div>
+</div>
+
+
+<!-- PAGE 17 — ФОТО КРУН К-6 -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="wide-photo-cell"><svg><use href="#ico-image"/></svg><div class="wide-photo-cell__main">ФОТО</div><div class="wide-photo-cell__sub">КРУН К-6 — вид ячейки наружной установки</div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">17</div></div>
+</div>
+
+
+<!-- PAGE 18 — ПРОДУКЦИЯ: К-14МК -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — К-14МК</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-grid"/></svg></div><div class="product-header__title">К-14МК</div></div>
+      <div class="product-header__subtitle">Комплектно-распределительные устройства серии К-14МК</div>
+    </div>
+    <p class="product-desc">КРУ серии К-14МК напряжением 6(10) кВ на токи 630–3150 А предназначены для приёма и распределения электрической энергии на объектах электроснабжения предприятий всех отраслей. КРУ представляют собой совокупность шкафов металлической конструкции для внутренней установки, рассчитанных на двустороннее обслуживание.</p>
+    <p class="product-desc">Камеры кассетного исполнения серии К-14МК имеют повышенную надёжность за счёт применения современных высоковольтных коммутационных аппаратов с высоким механическим и коммутационным ресурсом (вакуумные выключатели ABB, SIEMENS, Таврида-электрик, LS и др.). Релейная защита обеспечивается микропроцессорными блоками SCHNEIDER ELECTRIC, SIEMENS, ABB.</p>
+    <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики</div>
+    <table class="spec-table">
+      <tr><td>Номинальное напряжение, кВ</td><td>6; 10</td></tr>
+      <tr><td>Номинальное рабочее напряжение, кВ</td><td>7,2; 12</td></tr>
+      <tr><td>Номинальный ток главных цепей, А</td><td>До 2000</td></tr>
+      <tr><td>Номинальный ток сборных шин, А</td><td>630; 1000; 1600; 2000</td></tr>
+      <tr><td>Первичный ном. ток трансформаторов тока, А</td><td>50; 75; 100; 150; 200 и т.д.</td></tr>
+      <tr><td>Ном. ток откл. встроенного выключателя, кА</td><td>12,5; 16; 20; 25; 31,5</td></tr>
+      <tr><td>Ток электродинамической стойкости, кА</td><td>51</td></tr>
+      <tr><td>Ток термической стойкости (кратковр.), кА</td><td>20</td></tr>
+      <tr><td>Напряжение вспомог. цепей (перем.), В</td><td>220; 100</td></tr>
+      <tr><td>Напряжение вспомог. цепей (пост.), В</td><td>220</td></tr>
+      <tr><td>Вид изоляции</td><td>Воздушная</td></tr>
+      <tr><td>Вид присоединений</td><td>Кабельное; шинное</td></tr>
+      <tr><td>Условия обслуживания</td><td>Двустороннее</td></tr>
+      <tr><td>Наличие выкатных элементов</td><td>С выкатными элементами</td></tr>
+      <tr><td>Степень защиты (У3), IP</td><td>IP20 при закрытых дверях; IP00 при открытых</td></tr>
+      <tr><td>Степень защиты (У1), IP</td><td>IP34 (закрытое исполнение)</td></tr>
+      <tr><td>Климатическое исполнение</td><td>У3 (внутренняя установка)</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>До 1000 м</td></tr>
+      <tr><td>Влажность воздуха</td><td>Не более 80%</td></tr>
+    </table>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">18</div></div>
+</div>
+
+
+<!-- PAGE 19 — ФОТО К-14МК -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="wide-photo-cell"><svg><use href="#ico-image"/></svg><div class="wide-photo-cell__main">ФОТО</div><div class="wide-photo-cell__sub">К-14МК — вид КРУ с выкатным элементом</div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">19</div></div>
+</div>
+
+
+<!-- PAGE 20 — ПРОДУКЦИЯ: КРН / ЯКНО -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — КРН / ЯКНО</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-layers"/></svg></div><div class="product-header__title">КРН / ЯКНО</div></div>
+      <div class="product-header__subtitle">Ячейки высоковольтные наружной установки КРН и ЯКНО</div>
+    </div>
+    <p class="product-desc">Ячейки высоковольтные наружной установки серии КРН и ЯКНО предназначены для работы в электрических сетях трёхфазного тока напряжением 6 (10) кВ, частотой 50 Гц с изолированной или заземлённой через дугогасительный реактор нейтралью.</p>
+    <p class="product-desc">Ячейки ЯКНО используются для подключения цепей питания и защиты электрооборудования мощных карьерных электропотребителей, а также в составе комплектных распределительных пунктов комплекса буровых установок с лебёдками грузоподъёмностью до 1600 кН. Камера представляет собой разборную металлоконструкцию с аппаратурой главных цепей.</p>
+    <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики</div>
+    <table class="spec-table">
+      <tr><td>Номинальное напряжение, кВ</td><td>6; 10</td></tr>
+      <tr><td>Номинальное рабочее напряжение, кВ</td><td>7,2; 12</td></tr>
+      <tr><td>Ток термической стойкости, кА</td><td>12,5; 20</td></tr>
+      <tr><td>Коэф. трансформации трансформаторов тока, А</td><td>100...600</td></tr>
+      <tr><td>Ток электродинамической стойкости, кА</td><td>32; 51</td></tr>
+      <tr><td>Вид изоляции</td><td>Воздушная</td></tr>
+      <tr><td>Токоведущие части</td><td>С неизолированными шинами</td></tr>
+      <tr><td>Вид линейных высоковольтных подсоединений</td><td>ВВ-ВВ; ВВ-КВ; КВ-КВ</td></tr>
+      <tr><td>Условия обслуживания</td><td>Двустороннее</td></tr>
+      <tr><td>Наличие теплоизоляции</td><td>Без теплоизоляции (обогрев — опция)</td></tr>
+      <tr><td>Вид управления</td><td>Местное, дистанционное</td></tr>
+      <tr><td>Степень защиты</td><td>IP34 по ГОСТ 14254-96</td></tr>
+      <tr><td>Климатическое исполнение</td><td>У1 по ГОСТ 15150-69</td></tr>
+      <tr><td>Температура окружающей среды</td><td>от −45°С до +50°С (до −40°С при наличии обогрева)</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>Не более 1000 м</td></tr>
+    </table>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">20</div></div>
+</div>
+
+
+<!-- PAGE 21 — ФОТО КРН / ЯКНО -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="wide-photo-cell"><svg><use href="#ico-image"/></svg><div class="wide-photo-cell__main">ФОТО</div><div class="wide-photo-cell__sub">Ячейки КРН / ЯКНО — вид наружной высоковольтной ячейки</div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">21</div></div>
+</div>
+
+
+<!-- PAGE 22 — ПРОДУКЦИЯ: ВРУ / ГРЩ -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — ВРУ / ГРЩ</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-box"/></svg></div><div class="product-header__title">ВРУ / ГРЩ</div></div>
+      <div class="product-header__subtitle">Вводно-распределительные устройства и главные распределительные щиты</div>
+    </div>
+    <p class="product-desc">ВРУ — это электротехническое распределительное устройство в виде шкафа с установленными в нём аппаратами и приборами: счётчиками учёта электроэнергии, автоматическими выключателями, рубильниками, предохранителями, амперметрами, вольтметрами и т.п. Служит для приёма, распределения и учёта электрической энергии на промышленных, жилых и административных объектах, а также для защиты линий и оборудования от перегрузок и коротких замыканий.</p>
+    <p class="product-desc">Конструктивно выполнены на базе металлических шкафов одностороннего (двустороннего — для напольного исполнения) обслуживания навесного или напольного типа. Ввод питающих и отходящих кабелей — как сверху, так и снизу. Шкафы с АВР имеют световую сигнализацию состояния схемы АВР и кнопки ручного управления.</p>
+    <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики</div>
+    <table class="spec-table">
+      <tr><td>Номинальное напряжение, В</td><td>380/220</td></tr>
+      <tr><td>Вид изоляции</td><td>Воздушная</td></tr>
+      <tr><td>Токоведущие шины</td><td>С неизолированными шинами</td></tr>
+      <tr><td>Вид линейных отходящих присоединений</td><td>Кабельные</td></tr>
+      <tr><td>Условия обслуживания</td><td>Одностороннее</td></tr>
+      <tr><td>Электрическое сопротивление изоляции</td><td>Не менее 10 МОм</td></tr>
+      <tr><td>Климатическое исполнение / категория размещения</td><td>УХЛ4 по ГОСТ 15150-69</td></tr>
+      <tr><td>Температура окружающего воздуха</td><td>от −5°С до +40°С</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>Не более 2000 м</td></tr>
+      <tr><td>Относительная влажность воздуха</td><td>До 90% при +20°С; до 50% при +40°С</td></tr>
+      <tr><td>Режим работы</td><td>Продолжительный</td></tr>
+      <tr><td>Рабочее положение</td><td>Вертикальное</td></tr>
+    </table>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">22</div></div>
+</div>
+
+
+<!-- PAGE 23 — ФОТО ВРУ / ГРЩ -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="wide-photo-cell"><svg><use href="#ico-image"/></svg><div class="wide-photo-cell__main">ФОТО</div><div class="wide-photo-cell__sub">ВРУ / ГРЩ — шкаф в сборе, фронт и внутренняя часть</div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">23</div></div>
+</div>
+
+
+<!-- PAGE 24 — ПРОДУКЦИЯ: ЩО-70 -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — ЩО-70</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-layers"/></svg></div><div class="product-header__title">ЩО-70</div></div>
+      <div class="product-header__subtitle">Панели распределительные серии ЩО-70</div>
+    </div>
+    <p class="product-desc">Панели распределительные одностороннего обслуживания серии ЩО-70 служат для приёма, распределения и защиты линий от перегрузок и токов короткого замыкания. Предназначены для комплектования распределительных устройств трёхфазного переменного тока 380/220 В, частотой 50 Гц, в сетях с глухозаземлённой нейтралью, для установки внутри электропомещений.</p>
+    <p class="product-desc">Панели ЩО-70 представляют собой разборную металлическую конструкцию, внутри которой монтируется аппаратура главных и вспомогательных цепей. В верхней части расположена приборная панель для измерительных приборов. Аппаратура АВР-0,4 кВ монтируется в шкафу, устанавливаемом на дверь секционной панели.</p>
+    <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики</div>
+    <table class="spec-table">
+      <tr><td>Номинальное напряжение, В</td><td>380/220</td></tr>
+      <tr><td>Частота, Гц</td><td>50</td></tr>
+      <tr><td>Система нейтрали</td><td>Глухозаземлённая нейтраль</td></tr>
+      <tr><td>Степень защиты с фасада</td><td>IP20</td></tr>
+      <tr><td>Степень защиты с остальных сторон</td><td>IP00</td></tr>
+      <tr><td>Температура окружающей среды</td><td>от −25°С до +40°С</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>Не более 1000 м</td></tr>
+      <tr><td>Условия обслуживания</td><td>Одностороннее</td></tr>
+    </table>
+    <div class="spec-table-label"><svg><use href="#ico-box"/></svg> Устанавливаемое оборудование (по заказу)</div>
+    <ul class="supply-list">
+      <li>Автоматические выключатели серии ВА или аналоги</li>
+      <li>Рубильники-предохранители типа РПС</li>
+      <li>Рубильники типов РЕ19, ВР32, Р</li>
+      <li>Трансформаторы тока</li>
+      <li>Измерительные приборы и приборы учёта</li>
+      <li>Аппаратура устройств АВР-0,4 кВ</li>
+      <li>Аппаратура диспетчерского управления уличным освещением</li>
+    </ul>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">24</div></div>
+</div>
+
+
+<!-- PAGE 25 — ФОТО ЩО-70 -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="wide-photo-cell"><svg><use href="#ico-image"/></svg><div class="wide-photo-cell__main">ФОТО</div><div class="wide-photo-cell__sub">ЩО-70 — панели распределительного устройства 0,4 кВ</div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">25</div></div>
+</div>
+
+
+<!-- PAGE 26 — ПРОДУКЦИЯ: ПР11 / ШР11 + ЯРП -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — ПР11 / ЯРП</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-box"/></svg></div><div class="product-header__title">ПР11 / ШР11 и ЯРП</div></div>
+      <div class="product-header__subtitle">Пункты распределительные ПР11/ШР11 и ящики силовые ЯРП</div>
+    </div>
+
+    <div class="sub-product__title"><svg><use href="#ico-box"/></svg> Пункты распределительные ПР11 и ШР11</div>
+    <p class="product-desc">Предназначены для приёма и распределения электрической энергии напряжением 380/220 В трёхфазного переменного тока частотой 50 Гц в сетях с глухозаземлённой нейтралью, защиты отходящих линий при перегрузках, коротких замыканиях и недопустимых скачках напряжения, а также для нечастых оперативных включений и отключений (до 6 раз в сутки).</p>
+    <p class="product-desc">Изготавливаются напольного и навесного исполнения в виде металлического шкафа, внутри которого на раме устанавливается набор автоматических выключателей. Ввод питающих кабелей и отходящих линий — сверху или снизу. Могут иметь до 12 трёхполюсных фидеров.</p>
+    <table class="spec-table">
+      <tr><td>Номинальное напряжение, В</td><td>380/220</td></tr>
+      <tr><td>Степень защиты (утеплённое исполнение)</td><td>IP21</td></tr>
+      <tr><td>Степень защиты (напольное / навесное)</td><td>IP21 или IP54</td></tr>
+      <tr><td>Температура окружающей среды</td><td>от +10°С до +40°С</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>Не более 2000 м</td></tr>
+    </table>
+
+    <div class="sub-product" style="margin-top:5mm;">
+      <div class="sub-product__title"><svg><use href="#ico-zap"/></svg> Ящики силовые ЯР, ЯРП, ЯПР, ЯПРП</div>
+      <p class="product-desc">Предназначены для нечастых (не более 6 раз в час) коммутаций в цепях напряжением 380/220 В трёхфазного переменного тока частотой 50 Гц с глухозаземлённой нейтралью. Ящики ЯПР и ЯПРП — для переключения основного и резервного ввода. Обеспечивают защиту отходящих линий от токов короткого замыкания. Изготавливаются согласно ТУ3434-006-33874352-2004.</p>
+      <table class="spec-table">
+        <tr><td>Номинальное напряжение, В</td><td>380 (перем. ток, 50 Гц)</td></tr>
+        <tr><td>Номинальный ток</td><td>До 400 А</td></tr>
+        <tr><td>Степень защиты при открытых дверях</td><td>IP00</td></tr>
+        <tr><td>Степень защиты при закрытых дверях</td><td>IP21 или IP54</td></tr>
+        <tr><td>Группа условий эксплуатации</td><td>М2 по ГОСТ 17516.1-90</td></tr>
+        <tr><td>Климатическое исполнение</td><td>У3.1 и УХЛ4 по ГОСТ 15150-69</td></tr>
+        <tr><td>Высота установки над уровнем моря</td><td>До 2000 м</td></tr>
+        <tr><td>Рабочее положение</td><td>Вертикальное, отклонение не более 5°</td></tr>
+        <tr><td>Температура окружающей среды</td><td>от +1°С до +35°С</td></tr>
+      </table>
+      <p class="product-desc" style="margin-top:2.5mm;">Комплектация ящиков: вводной аппарат — рубильник серии ВР32; рубильник-переключатель серии ВР32 с боковым приводом; предохранители на отходящих линиях ПН2 или ППН.</p>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">26</div></div>
+</div>
+
+
+<!-- PAGE 27 — ФОТО ПР11 + ЯРП -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="dual-photo-grid">
+      <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">ПР11 / ШР11 — напольное<br>и навесное исполнение</div></div>
+      <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">ЯРП — ящик силовой<br>с рубильником</div></div>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">27</div></div>
+</div>
+
+
+<!-- PAGE 28 — ПРОДУКЦИЯ: Я5000 / ЯУО -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="product-accent-bar"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="product-header">
+      <div class="product-header__tag">Продукция — Я5000 / ЯУО</div>
+      <div class="product-header__title-row"><div class="product-header__title-icon"><svg><use href="#ico-settings"/></svg></div><div class="product-header__title">Я5000 / ЯУО</div></div>
+      <div class="product-header__subtitle">Ящики управления Я5000 и ЯУО</div>
+    </div>
+
+    <div class="sub-product__title"><svg><use href="#ico-settings"/></svg> Ящики управления Я5000</div>
+    <p class="product-desc">Предназначены для местного, дистанционного и автоматического управления асинхронными электродвигателями мощностью до 75 кВт с длительным режимом работы, а также для сигнализации и защиты асинхронных двигателей с короткозамкнутым ротором. Представляют собой металлический бокс с аппаратурой и приборами, установленными внутри на панели и на двери. Устанавливаются на стене, колонне или вертикальном основании.</p>
+    <table class="spec-table">
+      <tr><td>Мощность управляемых электродвигателей</td><td>До 75 кВт</td></tr>
+      <tr><td>Температура окружающей среды</td><td>от +10°С до +40°С</td></tr>
+      <tr><td>Высота над уровнем моря</td><td>Не более 2000 м</td></tr>
+    </table>
+
+    <div class="sub-product">
+      <div class="sub-product__title"><svg><use href="#ico-zap"/></svg> Ящики управления освещением ЯУО</div>
+      <p class="product-desc">Предназначены для местного, дистанционного и автоматического управления осветительными сетями и установками производственных зданий, сооружений, территорий любых объектов с любыми источниками света (лампы накаливания, ДРЛ, ДРИ и др.).</p>
+      <p class="product-desc">Схема ЯУО 9601 обеспечивает автоматический режим управления по времени и/или уровню освещённости, ручной и дистанционный режимы. Схема ЯУО 9602 — автоматический режим только по уровню освещённости, а также ручной и дистанционный режимы.</p>
+      <div class="spec-table-label"><svg><use href="#ico-clipboard"/></svg> Технические характеристики ЯУО</div>
+      <table class="spec-table">
+        <tr><td>Номинальное напряжение (перем. ток), В</td><td>До 660</td></tr>
+        <tr><td>Номинальное напряжение (пост. ток), В</td><td>До 440</td></tr>
+        <tr><td>Ном. ток устройств управления электроприводами</td><td>До 160 А</td></tr>
+        <tr><td>Ном. ток устройств ввода, распределения и учёта</td><td>До 630 А</td></tr>
+        <tr><td>Ном. ток цепей управления</td><td>До 10 А</td></tr>
+        <tr><td>Электродинамич. стойкость шин (до 400 А)</td><td>25 кА</td></tr>
+        <tr><td>Электродинамич. стойкость шин (до 630 А)</td><td>50 кА</td></tr>
+      </table>
+      <div class="spec-table-label"><svg><use href="#ico-layers"/></svg> Функции ЯУО</div>
+      <ul class="supply-list">
+        <li>Включение/отключение по сигналу фотодатчика при достижении заданного уровня освещённости</li>
+        <li>Включение/отключение по программам реле времени суточного типа 2РВМ</li>
+        <li>Ручное управление кнопками на двери ящика</li>
+        <li>Дистанционное управление посредством устройств телемеханики из диспетчерского пункта</li>
+      </ul>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">28</div></div>
+</div>
+
+
+<!-- PAGE 29 — ФОТО Я5000 + ЯУО -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="dual-photo-grid">
+      <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">Я5000 — ящик управления<br>электродвигателем</div></div>
+      <div class="photo-cell"><svg><use href="#ico-image"/></svg><div class="photo-cell__label">ФОТО</div><div class="photo-cell__sub">ЯУО — ящик управления<br>освещением</div></div>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">29</div></div>
+</div>
+
+
+<!-- PAGE 30 — ПРОИЗВОДСТВЕННЫЙ ПРОЦЕСС -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="deco-stripe"></div>
+  <div class="content-page" style="padding-top:20mm;">
+    <div class="section-tag">Производственный процесс</div>
+    <div class="section-title">Как мы работаем</div>
+    <p class="process-lead">Производственный цикл FLUX Energy построен на последовательности чётко определённых этапов. Это позволяет заказчику контролировать прохождение заказа, своевременно вносить корректировки и получать оборудование в согласованные сроки с необходимым комплектом документации.</p>
+
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-step__num"><span>01</span></div>
+        <div class="process-step__connector"></div>
+        <div class="process-step__body">
+          <div class="process-step__title">Получение запроса</div>
+          <div class="process-step__text">Получение технического задания, опросного листа, схемы или проектной документации от заказчика.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num"><span>02</span></div>
+        <div class="process-step__connector"></div>
+        <div class="process-step__body">
+          <div class="process-step__title">Техническая проработка</div>
+          <div class="process-step__text">Инженерный анализ параметров объекта, подбор исполнения, верификация схемных решений.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num"><span>03</span></div>
+        <div class="process-step__connector"></div>
+        <div class="process-step__body">
+          <div class="process-step__title">Согласование</div>
+          <div class="process-step__text">Согласование спецификации, комплектации и технических условий с заказчиком до начала производства.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num"><span>04</span></div>
+        <div class="process-step__connector"></div>
+        <div class="process-step__body">
+          <div class="process-step__title">Изготовление</div>
+          <div class="process-step__text">Производство оборудования на собственной производственной базе в Атырау.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num"><span>05</span></div>
+        <div class="process-step__connector"></div>
+        <div class="process-step__body">
+          <div class="process-step__title">Контроль качества</div>
+          <div class="process-step__text">Контроль сборки, маркировки, комплектности и соответствия документации. Подготовка к отгрузке.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-step__num"><span>06</span></div>
+        <div class="process-step__body">
+          <div class="process-step__title">Отгрузка и сопровождение</div>
+          <div class="process-step__text">Передача готового оборудования с комплектом сопроводительной документации. Сопровождение поставки.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">30</div></div>
+</div>
+
+
+<!-- PAGE 31 — ФОТО производственного процесса -->
+<div class="page">
+  <div class="page-header"><div class="page-header__logo"><div class="page-header__logo-icon"><svg viewBox="0 0 24 24"><use href="#ico-bolt" fill="#fff"/></svg></div><span class="page-header__logo-text">FLUX</span></div><div class="page-header__title">Производство электрощитового оборудования 0,4-10 кВ</div></div>
+  <div class="grid-photo-wrap">
+    <div class="wide-photo-cell"><svg><use href="#ico-image"/></svg><div class="wide-photo-cell__main">ФОТО</div><div class="wide-photo-cell__sub">Этапы производственного процесса — фото изготовления или контроля качества</div></div>
+  </div>
+  <div class="page-footer"><div class="page-footer__brand">FLUX <span>ENERGY</span></div><div class="page-footer__domain">flux-energy.kz</div><div class="page-footer__pager">31</div></div>
+</div>
+
+
+<!-- PAGE 32 — КОНТАКТНАЯ ИНФОРМАЦИЯ -->
+<div class="page contact-page">
+  <div class="contact-wrap">
+    <div class="contact-logo">
+      <div class="logo logo--light">
+        <div class="logo__icon"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z" fill="#fff"/></svg></div>
+        <span class="logo__text">FLUX</span>
+      </div>
+    </div>
+
+    <div style="font-family:'Space Mono',monospace; font-size:0.78rem; color:var(--accent); letter-spacing:.2em; text-transform:uppercase; margin-bottom:3mm; display:flex; align-items:center; gap:8px;"><span style="width:20px;height:2px;background:var(--accent);display:inline-block;"></span> Контактная информация</div>
+    <div style="font-size:2.6rem; font-weight:800; color:var(--white); line-height:1.15; margin-bottom:5mm;">Контакты</div>
+
+    <div class="contact-tagline"><strong style="color:var(--white);">FLUX ENERGY</strong><br>Производство электрощитового оборудования 0,4-10 кВ</div>
+    <div class="contact-tagline--sub">для промышленных, нефтегазовых и инфраструктурных объектов</div>
+
+    <div class="contact-divider"></div>
+
+    <div class="contact-grid">
+      <div class="contact-block">
+        <div class="contact-block__label"><svg><use href="#ico-pin"/></svg> Производство и офис</div>
+        <div class="contact-block__text">
+          Республика Казахстан, г. Атырау<br>
+          СМП-163 м-н, Атырау,<br>
+          Атырау городская администрация<br>
+          1 этаж
+        </div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block__label"><svg><use href="#ico-zap"/></svg> Контакты</div>
+        <div class="contact-block__text">
+          <strong>Тел.:</strong> <a href="tel:+77014670749">+7 701 467 07 49</a><br><br>
+          <strong>E-mail:</strong> <a href="mailto:info@flux.kz">info@flux.kz</a><br><br>
+          <strong>Сайт:</strong> <a href="https://flux.kz">flux.kz</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-requests">
+      <div class="contact-requests__label"><svg><use href="#ico-clipboard"/></svg> Принимаем запросы по</div>
+      <ul>
+        <li>Подбору и согласованию решений под параметры проекта</li>
+        <li>Изготовлению оборудования на собственной производственной базе</li>
+        <li>Документальному сопровождению поставки</li>
+        <li>Локальной технической поддержке в Казахстане</li>
+      </ul>
+    </div>
+
+    <div class="contact-divider"></div>
+
+    <div class="contact-footer">
+      <div class="contact-footer__domain">flux-energy.kz</div>
+      <div class="contact-footer__copy">© FLUX Energy, 2026</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
